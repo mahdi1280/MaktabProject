@@ -25,6 +25,25 @@ public class User extends BaseEntity {
     private UserStatus status;
     private Role role;
 
+    public User(String firstname, String lastname, String email, String password, String specialty, byte[] image, int credit, UserStatus status, Role role) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.specialty = specialty;
+        this.image = image;
+        this.credit = credit;
+        this.status = status;
+        this.role = role;
+    }
+
+    public User() {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
     public String getFirstname() {
         return firstname;
     }
@@ -124,5 +143,70 @@ public class User extends BaseEntity {
     public User setRole(Role role) {
         this.role = role;
         return this;
+    }
+
+    public static class Builder{
+
+        private String firstname;
+        private String lastname;
+        private String email;
+        private String password;
+        private String specialty;
+        private byte[] image;
+        private int credit;
+        private UserStatus status;
+        private Role role;
+
+        private Builder(){}
+
+        public Builder firstname(String firstname){
+            this.firstname=firstname;
+            return this;
+        }
+
+        public Builder lastname(String lastname){
+            this.lastname=lastname;
+            return this;
+        }
+
+        public Builder email(String email){
+            this.email=email;
+            return this;
+        }
+
+        public Builder password(String password){
+            this.password=password;
+            return this;
+        }
+
+        public Builder specialty(String specialty){
+            this.specialty=specialty;
+            return this;
+        }
+
+        public Builder image(byte[] image){
+            this.image=image;
+            return this;
+        }
+
+        public Builder credit(int credit){
+            this.credit=credit;
+            return this;
+        }
+
+        public Builder status(UserStatus status){
+            this.status=status;
+            return this;
+        }
+
+        public Builder role(Role role){
+            this.role=role;
+            return this;
+        }
+
+        public User build(){
+            return new User(firstname, lastname, email, password, specialty, image, credit, status, role);
+        }
+
     }
 }

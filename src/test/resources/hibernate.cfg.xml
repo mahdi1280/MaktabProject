@@ -3,9 +3,8 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
-        <property name="connection.username">postgres</property>
-        <property name="connection.password">root</property>
+        <property name="connection.url">jdbc:h2:mem:testdb;DB_CLOSE_DELAY=0</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="ir.maktab.model.Comment"/>
@@ -14,5 +13,6 @@
         <mapping class="ir.maktab.model.Service"/>
         <mapping class="ir.maktab.model.UnderService"/>
         <mapping class="ir.maktab.model.User"/>
+
     </session-factory>
 </hibernate-configuration>
