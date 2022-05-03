@@ -1,14 +1,15 @@
 package ir.maktab.model;
 
 import ir.maktab.model.enums.StatusOrder;
+import ir.maktab.service.order.OrderService;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(schema = Schema.SCHEMA_NAME)
-public class Order extends BaseEntity{
+@Table(schema = Schema.SCHEMA_NAME,name = "Orders")
+public class Order extends BaseEntity {
 
     private int proposedPrice;
     private LocalDateTime createdAt;
@@ -19,13 +20,29 @@ public class Order extends BaseEntity{
     private UnderService underService;
     private User user;
 
+    public Order(int proposedPrice, String address, StatusOrder status, LocalDateTime wordTime, UnderService underService, User user) {
+        this.proposedPrice = proposedPrice;
+        this.address = address;
+        this.status = status;
+        this.wordTime = wordTime;
+        this.underService = underService;
+        this.user = user;
+    }
+
+    public Order() {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+
     public int getProposedPrice() {
         return proposedPrice;
     }
 
-    public Order setProposedPrice(int proposedPrice) {
+    public void setProposedPrice(int proposedPrice) {
         this.proposedPrice = proposedPrice;
-        return this;
     }
 
     @CreationTimestamp
@@ -33,18 +50,16 @@ public class Order extends BaseEntity{
         return createdAt;
     }
 
-    public Order setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        return this;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public Order setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
-        return this;
     }
 
     @Enumerated(EnumType.STRING)
@@ -52,18 +67,16 @@ public class Order extends BaseEntity{
         return status;
     }
 
-    public Order setStatus(StatusOrder status) {
+    public void setStatus(StatusOrder status) {
         this.status = status;
-        return this;
     }
 
     public LocalDateTime getWordTime() {
         return wordTime;
     }
 
-    public Order setWordTime(LocalDateTime wordTime) {
+    public void setWordTime(LocalDateTime wordTime) {
         this.wordTime = wordTime;
-        return this;
     }
 
     @ManyToOne
@@ -71,19 +84,64 @@ public class Order extends BaseEntity{
         return underService;
     }
 
-    public Order setUnderService(UnderService underService) {
+    public void setUnderService(UnderService underService) {
         this.underService = underService;
-        return this;
     }
-
 
     @ManyToOne
     public User getUser() {
         return user;
     }
 
-    public Order setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
-        return this;
+    }
+
+    public static class Builder{
+
+        private int proposedPrice;
+        private String address;
+        private StatusOrder status;
+        private LocalDateTime wordTime;
+
+        private UnderService underService;
+        private User user;
+
+        private Builder(){}
+
+        public Builder proposedPrice(int proposedPrice){
+            this.proposedPrice=proposedPrice;
+            return this;
+        }
+
+        public Builder address(String address){
+            this.address=address;
+            return this;
+        }
+
+        public Builder status(StatusOrder status){
+            this.status=status;
+            return this;
+        }
+
+        public Builder wordTime(LocalDateTime wordTime){
+            this.wordTime=wordTime;
+            return this;
+        }
+
+        public Builder underService(UnderService underService){
+            this.underService=underService;
+            return this;
+        }
+
+        public Builder user(User user){
+            this.user=user;
+            return this;
+        }
+
+        public Order build(){
+            return new Order(proposedPrice,address,status,wordTime,underService,user);
+        }
+
     }
 }

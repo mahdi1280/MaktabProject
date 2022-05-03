@@ -12,22 +12,33 @@ public class UnderService extends BaseEntity {
     private String details;
     private Service service;
 
+    public UnderService(int basePrice, String details, Service service) {
+        this.basePrice = basePrice;
+        this.details = details;
+        this.service = service;
+    }
+
+    public UnderService() {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
     public int getBasePrice() {
         return basePrice;
     }
 
-    public UnderService setBasePrice(int basePrice) {
+    public void setBasePrice(int basePrice) {
         this.basePrice = basePrice;
-        return this;
     }
 
     public String getDetails() {
         return details;
     }
 
-    public UnderService setDetails(String details) {
+    public void setDetails(String details) {
         this.details = details;
-        return this;
     }
 
     @ManyToOne
@@ -35,8 +46,35 @@ public class UnderService extends BaseEntity {
         return service;
     }
 
-    public UnderService setService(Service service) {
+    public void setService(Service service) {
         this.service = service;
-        return this;
+    }
+
+    public static class Builder{
+
+        private int basePrice;
+        private String details;
+        private Service service;
+
+        private Builder(){}
+
+        public Builder basePrice(int basePrice){
+            this.basePrice=basePrice;
+            return this;
+        }
+
+        public Builder details(String details){
+            this.details=details;
+            return this;
+        }
+
+        public Builder service(Service service){
+            this.service=service;
+            return this;
+        }
+
+        public UnderService build(){
+            return new UnderService(basePrice,details,service);
+        }
     }
 }

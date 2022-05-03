@@ -23,9 +23,8 @@ public class Service extends BaseEntity {
         return title;
     }
 
-    public Service setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
-        return this;
     }
 
     public static class Builder{

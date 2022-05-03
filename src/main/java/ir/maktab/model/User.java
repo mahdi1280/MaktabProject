@@ -2,6 +2,7 @@ package ir.maktab.model;
 
 import ir.maktab.model.enums.Role;
 import ir.maktab.model.enums.UserStatus;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -48,81 +49,73 @@ public class User extends BaseEntity {
         return firstname;
     }
 
-    public User setFirstname(String firstname) {
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
-        return this;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public User setLastname(String lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
-        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public User setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     public String getSpecialty() {
         return specialty;
     }
 
-    public User setSpecialty(String specialty) {
+    public void setSpecialty(String specialty) {
         this.specialty = specialty;
-        return this;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public User setDeleted(boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 
     public byte[] getImage() {
         return image;
     }
 
-    public User setImage(byte[] image) {
+    public void setImage(byte[] image) {
         this.image = image;
-        return this;
     }
 
+    @CreationTimestamp
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public User setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        return this;
     }
 
     public int getCredit() {
         return credit;
     }
 
-    public User setCredit(int credit) {
+    public void setCredit(int credit) {
         this.credit = credit;
-        return this;
     }
 
     @Enumerated(EnumType.STRING)
@@ -130,9 +123,8 @@ public class User extends BaseEntity {
         return status;
     }
 
-    public User setStatus(UserStatus status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
-        return this;
     }
 
     @Enumerated(EnumType.STRING)
@@ -140,9 +132,8 @@ public class User extends BaseEntity {
         return role;
     }
 
-    public User setRole(Role role) {
+    public void setRole(Role role) {
         this.role = role;
-        return this;
     }
 
     public static class Builder{

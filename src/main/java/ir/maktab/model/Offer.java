@@ -19,22 +19,36 @@ public class Offer extends BaseEntity{
     private Order order;
     private User user;
 
+    public Offer(LocalDateTime periodOfTime, int proposedPrice, LocalDateTime startTime, Order order, User user) {
+        this.periodOfTime = periodOfTime;
+        this.proposedPrice = proposedPrice;
+        this.startTime = startTime;
+        this.order = order;
+        this.user = user;
+    }
+
+    public Offer() {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+
     public LocalDateTime getPeriodOfTime() {
         return periodOfTime;
     }
 
-    public Offer setPeriodOfTime(LocalDateTime periodOfTime) {
+    public void setPeriodOfTime(LocalDateTime periodOfTime) {
         this.periodOfTime = periodOfTime;
-        return this;
     }
 
     public int getProposedPrice() {
         return proposedPrice;
     }
 
-    public Offer setProposedPrice(int proposedPrice) {
+    public void setProposedPrice(int proposedPrice) {
         this.proposedPrice = proposedPrice;
-        return this;
     }
 
     @CreationTimestamp
@@ -42,18 +56,16 @@ public class Offer extends BaseEntity{
         return createdAt;
     }
 
-    public Offer setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        return this;
     }
 
     public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public Offer setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
-        return this;
     }
 
     @ManyToOne
@@ -61,9 +73,8 @@ public class Offer extends BaseEntity{
         return order;
     }
 
-    public Offer setOrder(Order order) {
+    public void setOrder(Order order) {
         this.order = order;
-        return this;
     }
 
     @ManyToOne
@@ -71,8 +82,50 @@ public class Offer extends BaseEntity{
         return user;
     }
 
-    public Offer setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
-        return this;
+    }
+
+    public static class Builder{
+
+        private LocalDateTime periodOfTime;
+        private int proposedPrice;
+        private LocalDateTime startTime;
+
+        private Order order;
+        private User user;
+
+        private Builder(){
+
+        }
+
+        public Builder periodOfTime(LocalDateTime periodOfTime){
+            this.periodOfTime=periodOfTime;
+            return this;
+        }
+
+        public Builder proposedPrice(int proposedPrice){
+            this.proposedPrice=proposedPrice;
+            return this;
+        }
+
+        public Builder startTime(LocalDateTime startTime){
+            this.startTime=startTime;
+            return this;
+        }
+
+        public Builder order(Order order){
+            this.order=order;
+            return this;
+        }
+
+        public Builder user(User user){
+            this.user=user;
+            return this;
+        }
+
+        public Offer build(){
+            return new Offer(periodOfTime,proposedPrice,startTime,order,user);
+        }
     }
 }
