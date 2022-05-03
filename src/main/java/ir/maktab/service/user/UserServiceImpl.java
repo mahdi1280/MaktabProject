@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
     public User findById(long id) {
         return userRepository.findById(User.class,id);
     }
+
+    @Override
+    public void update(User user) {
+        this.userRepository.update(user);
+    }
 }

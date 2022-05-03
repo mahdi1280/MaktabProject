@@ -7,4 +7,6 @@ public interface UserService {
     void save(User user);
 
     User findById(long id);
+
+    void update(User user);
 }

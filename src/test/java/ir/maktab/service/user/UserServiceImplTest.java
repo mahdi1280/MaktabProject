@@ -24,4 +24,20 @@ class UserServiceImplTest {
         Assertions.assertEquals(user.getId(), userService.findById(user.getId()).getId());
     }
 
+    @Test
+    void updateUser(){
+        User user = User.builder()
+                .firstname("ali")
+                .lastname("mohammadi")
+                .email("mahdi@gmail.com")
+                .password("asdd")
+                .role(Role.CUSTOMER)
+                .status(UserStatus.NEW)
+                .build();
+        userService.save(user);
+        user.setPassword("ali");
+        userService.update(user);
+        Assertions.assertEquals(user.getPassword(), userService.findById(user.getId()).getPassword());
+    }
+
 }
