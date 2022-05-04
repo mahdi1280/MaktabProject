@@ -23,9 +23,10 @@ public class User extends BaseEntity {
     private int credit;
     private UserStatus status;
     private Role role;
+    private Integer score;
     private Collection<Service> services=new ArrayList<>();
 
-    public User(String firstname, String lastname, String email, String password, byte[] image, int credit, UserStatus status, Role role) {
+    public User(String firstname, String lastname, String email, String password, byte[] image, int credit, UserStatus status,Integer score, Role role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -33,6 +34,7 @@ public class User extends BaseEntity {
         this.image = image;
         this.credit = credit;
         this.status = status;
+        this.score=score;
         this.role = role;
     }
 
@@ -131,6 +133,14 @@ public class User extends BaseEntity {
         this.status = status;
     }
 
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     @Enumerated(EnumType.STRING)
     public Role getRole() {
         return role;
@@ -150,6 +160,7 @@ public class User extends BaseEntity {
         private int credit;
         private UserStatus status;
         private Role role;
+        private Integer score;
 
         private Builder(){}
 
@@ -193,8 +204,13 @@ public class User extends BaseEntity {
             return this;
         }
 
+        public Builder score(Integer score){
+            this.score=score;
+            return this;
+        }
+
         public User build(){
-            return new User(firstname, lastname, email, password, image, credit, status, role);
+            return new User(firstname, lastname, email, password, image, credit, status, score,role);
         }
 
     }

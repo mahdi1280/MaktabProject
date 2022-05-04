@@ -98,6 +98,7 @@ class UserServiceImplTest {
                 .password("asdd")
                 .role(Role.CUSTOMER)
                 .status(UserStatus.NEW)
+                .score(4)
                 .build();
 
         user.getServices().add(service);
