@@ -3,6 +3,8 @@ package ir.maktab.service.user;
 import ir.maktab.model.User;
 import ir.maktab.repository.UserRepository;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -24,5 +26,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         this.userRepository.update(user);
+    }
+
+    @Override
+    public List<User> findAllSpecialty() {
+        return userRepository.findALlSpecialty();
+    }
+
+    @Override
+    public List<User> findAllUser() {
+        return userRepository.findAllUser();
     }
 }

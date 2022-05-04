@@ -6,6 +6,8 @@ import ir.maktab.model.enums.UserStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class UserServiceImplTest {
 
     UserService userService = new UserServiceImpl();
@@ -39,5 +41,24 @@ class UserServiceImplTest {
         userService.update(user);
         Assertions.assertEquals(user.getPassword(), userService.findById(user.getId()).getPassword());
     }
+
+    @Test
+    void getAll(){
+        List<User> allSpecialty = userService.findAllSpecialty();
+        for (User user:
+             allSpecialty) {
+            Assertions.assertNotEquals(Role.EXPERT, user.getRole());
+        }
+    }
+
+    @Test
+    void getAllUser(){
+        List<User> allUser = userService.findAllUser();
+        for (User user:
+                allUser) {
+            Assertions.assertNotEquals(Role.CUSTOMER, user.getRole());
+        }
+    }
+
 
 }
