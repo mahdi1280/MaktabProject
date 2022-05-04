@@ -1,5 +1,6 @@
 package ir.maktab.service.user;
 
+import ir.maktab.dto.request.UserSearchRequest;
 import ir.maktab.model.User;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface UserService {
     List<User> findAll();
 
     void changePassword(long id,String password);
+
+    List<User> search(UserSearchRequest userSearchRequest);
 }

@@ -1,5 +1,6 @@
 package ir.maktab.service.user;
 
+import ir.maktab.dto.request.UserSearchRequest;
 import ir.maktab.model.Service;
 import ir.maktab.model.UnderService;
 import ir.maktab.model.User;
@@ -136,5 +137,41 @@ class UserServiceImplTest {
             e.printStackTrace();
         }
         return bFile;
+    }
+
+    @Test
+    void search(){
+        UserSearchRequest userSearchRequest=UserSearchRequest.builder()
+//                        .underService()
+                                .email("m@gmail.com")
+//                                        .firstname()
+//                                                .lastname()
+                                                        .build();
+
+        List<User> search = userService.search(userSearchRequest);
+        for(User user:search){
+            Assertions.assertEquals("m@gmail.com",user.getEmail());
+        }
+    }
+
+    private void saveAllUser(){
+        User user = User.builder()
+                .firstname("ali")
+                .lastname("mohammadi")
+                .email("m@gmail.com")
+                .password("asdd")
+                .role(Role.CUSTOMER)
+                .status(UserStatus.NEW)
+                .build();
+        User user1 = User.builder()
+                .firstname("ali")
+                .lastname("mohammadi")
+                .email("masda@gmail.com")
+                .password("asdd")
+                .role(Role.CUSTOMER)
+                .status(UserStatus.NEW)
+                .build();
+        userService.save(user1);
+        userService.save(user);
     }
 }

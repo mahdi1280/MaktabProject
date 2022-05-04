@@ -1,5 +1,6 @@
 package ir.maktab.service.user;
 
+import ir.maktab.dto.request.UserSearchRequest;
 import ir.maktab.model.User;
 import ir.maktab.repository.UserRepository;
 
@@ -46,5 +47,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(long id, String password) {
         userRepository.changePassword(id,password);
+    }
+
+    @Override
+    public List<User> search(UserSearchRequest userSearchRequest) {
+        return userRepository.search(userSearchRequest);
     }
 }

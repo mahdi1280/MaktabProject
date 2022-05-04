@@ -1,9 +1,11 @@
 package ir.maktab.repository;
 
+import ir.maktab.dto.request.UserSearchRequest;
 import ir.maktab.model.User;
 import ir.maktab.model.enums.Role;
 import ir.maktab.session.MySession;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -30,5 +32,12 @@ public interface UserRepository extends BaseRepository<User> {
         instance.beginTransaction();
         instance.save(user1);
         instance.getTransaction().commit();
+    }
+
+    default List<User> search(UserSearchRequest userSearchRequest){
+        Session instance = MySession.getInstance();
+        return instance.createCriteria(User.class)
+                .add(Restrictions.eq("email","m@gmail.com"))
+                .list();
     }
 }
