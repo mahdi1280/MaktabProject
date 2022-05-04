@@ -60,5 +60,26 @@ class UserServiceImplTest {
         }
     }
 
+    @Test
+    void updateSpecialty(){
+        User user = User.builder()
+                .firstname("ali")
+                .lastname("mohammadi")
+                .email("mahdi@gmail.com")
+                .password("asdd")
+                .role(Role.CUSTOMER)
+                .status(UserStatus.NEW)
+                .build();
+        userService.save(user);
+        user.setSpecialty("ab garm kon");
+        userService.update(user);
+        Assertions.assertEquals(user.getSpecialty(), userService.findById(user.getId()).getSpecialty());
 
+    }
+
+    @Test
+    void findAll(){
+        List<User> all = userService.findAll();
+        Assertions.assertEquals(all.size(),userService.findAll().size());
+    }
 }

@@ -15,4 +15,6 @@ public interface UserService {
     List<User> findAllSpecialty();
 
     List<User> findAllUser();
+
+    List<User> findAll();
 }

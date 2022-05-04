@@ -4,6 +4,8 @@ import ir.maktab.model.Service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceServiceImplTest {
@@ -17,6 +19,12 @@ class ServiceServiceImplTest {
                 .build();
         serviceService.save(service);
         Assertions.assertEquals(service.getTitle(),serviceService.findById(service.getId()).getTitle());
+    }
+
+    @Test
+    void findAll(){
+        List<Service> all = serviceService.findAll();
+        Assertions.assertEquals(all.size(),serviceService.findAll().size());
     }
 
 }

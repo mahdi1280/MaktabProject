@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 class OrderServiceImplTest {
 
@@ -56,7 +57,12 @@ class OrderServiceImplTest {
                 .build();
         orderService.save(order);
         Assertions.assertEquals(order.getId(), orderService.findById(order.getId()).getId());
+    }
 
+    @Test
+    void findAll(){
+        List<Order> all = orderService.findAll();
+        Assertions.assertEquals(all.size(), orderService.findAll().size());
     }
 
 }

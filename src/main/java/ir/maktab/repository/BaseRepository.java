@@ -3,6 +3,8 @@ package ir.maktab.repository;
 import ir.maktab.session.MySession;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public interface BaseRepository<T> {
 
     default void save(T t){
@@ -29,5 +31,10 @@ public interface BaseRepository<T> {
     default T findById(Class<T> clazz,long id){
         Session instance = MySession.getInstance();
         return instance.get(clazz,id);
+    }
+
+    default List<T> findAll(Class<T> clazz){
+        Session instance = MySession.getInstance();
+        return instance.createQuery("from "+clazz.getName(),clazz).list();
     }
 }

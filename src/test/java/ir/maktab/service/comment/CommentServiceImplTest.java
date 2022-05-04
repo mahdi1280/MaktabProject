@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 class CommentServiceImplTest {
 
@@ -74,6 +75,12 @@ class CommentServiceImplTest {
                 .build();
         commentService.save(comment);
         Assertions.assertEquals(comment.getDetails(), commentService.findById(comment.getId()).getDetails());
+    }
+
+    @Test
+    void findAll(){
+        List<Comment> all = commentService.findAll();
+        Assertions.assertEquals(all.size(), commentService.findAll().size());
     }
 
 }

@@ -7,6 +7,8 @@ import ir.maktab.service.service.ServiceServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class UnderServiceServiceImplTest {
 
     UnderServiceService underServiceService = new UnderServiceServiceImpl();
@@ -27,4 +29,9 @@ class UnderServiceServiceImplTest {
         Assertions.assertEquals(underService.getId(),underServiceService.findById(underService.getId()).getId());
     }
 
+    @Test
+    void findAll(){
+        List<UnderService> all = underServiceService.findAll();
+        Assertions.assertEquals(all.size(),underServiceService.findAll().size());
+    }
 }
