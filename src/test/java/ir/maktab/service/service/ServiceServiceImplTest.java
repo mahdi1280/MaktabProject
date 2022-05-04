@@ -14,8 +14,8 @@ class ServiceServiceImplTest {
 
     @Test
     void save(){
-        Service service=Service.builder()
-                        .title("manzel")
+       Service service=Service.builder()
+                .title("manzel")
                 .build();
         serviceService.save(service);
         Assertions.assertEquals(service.getTitle(),serviceService.findById(service.getId()).getTitle());

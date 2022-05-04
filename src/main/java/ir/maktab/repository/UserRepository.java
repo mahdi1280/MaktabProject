@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserRepository extends BaseRepository<User> {
 
 
-    default List<User> findALlSpecialty(){
+    default List<User> findALlExpert(){
         Session instance = MySession.getInstance();
         return instance.createQuery("select u from User u where u.role=:role",User.class)
                 .setParameter("role", Role.EXPERT).getResultList();

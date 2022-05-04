@@ -1,14 +1,14 @@
 package ir.maktab.service.user;
 
+import ir.maktab.model.Service;
 import ir.maktab.model.User;
 import ir.maktab.model.enums.Role;
 import ir.maktab.model.enums.UserStatus;
+import ir.maktab.service.service.ServiceService;
+import ir.maktab.service.service.ServiceServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
@@ -16,6 +16,8 @@ import java.util.List;
 class UserServiceImplTest {
 
     UserService userService = new UserServiceImpl();
+    ServiceService serviceService=new ServiceServiceImpl();
+
 
     @Test
     void saveUser() {
@@ -65,8 +67,8 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getAll(){
-        List<User> allSpecialty = userService.findAllSpecialty();
+    void findAllExpert(){
+        List<User> allSpecialty = userService.findALlExpert();
         for (User user:
              allSpecialty) {
             Assertions.assertNotEquals(Role.EXPERT, user.getRole());
@@ -83,7 +85,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    void updateSpecialty(){
+    void addServiceInExpert(){
+        Service service=Service.builder()
+                .title("manzel")
+                .build();
+        serviceService.save(service);
+
         User user = User.builder()
                 .firstname("ali")
                 .lastname("mohammadi")
@@ -92,10 +99,11 @@ class UserServiceImplTest {
                 .role(Role.CUSTOMER)
                 .status(UserStatus.NEW)
                 .build();
+
+        user.getServices().add(service);
         userService.save(user);
-        user.setSpecialty("ab garm kon");
-        userService.update(user);
-        Assertions.assertEquals(user.getSpecialty(), userService.findById(user.getId()).getSpecialty());
+
+        Assertions.assertEquals(user.getServices().size(), userService.findById(user.getId()).getServices().size());
 
     }
 

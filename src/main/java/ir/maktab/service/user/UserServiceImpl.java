@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllSpecialty() {
-        return userRepository.findALlSpecialty();
+    public List<User> findALlExpert() {
+        return userRepository.findALlExpert();
     }
 
     @Override
