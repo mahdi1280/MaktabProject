@@ -57,9 +57,9 @@ public interface UserRepository extends BaseRepository<User> {
             predicates.add(criteriaBuilder.equal(from.get("role"), userSearchRequest.getRole()));
         }
         if (Objects.nonNull(userSearchRequest.getUnderService())) {
-            predicates.add(criteriaBuilder.equal(from.get("underService"), userSearchRequest.getUnderService()));
+            predicates.add(criteriaBuilder.equal(from.get("services"), userSearchRequest.getUnderService()));
         }
-        CriteriaQuery<User> where = query.select(from).where(predicates.toArray(new Predicate[predicates.size()]));
+        CriteriaQuery<User> where = query.select(from).where(predicates.toArray(new Predicate[0]));
 
         return instance.createQuery(where).getResultList();
     }

@@ -141,30 +141,44 @@ class UserServiceImplTest {
     @Test
     void search(){
         saveAllUser();
-        UserSearchRequest userSearchRequest=UserSearchRequest.builder()
-//                        .underService()
-                                .email("m@gmail.com")
-                                        .firstname("ali")
-                                                .lastname("mohammadi")
-                                                        .build();
+        UnderService underService = underServiceService.findById(1);
+        UserSearchRequest userSearchRequest = UserSearchRequest.builder()
+                .underService(underService)
+                .role(Role.CUSTOMER)
+                .email("m@gmail.com")
+                .firstname("ali")
+                .lastname("mohammadi")
+                .build();
 
         List<User> search = userService.search(userSearchRequest);
         for(User user:search){
             Assertions.assertEquals("m@gmail.com",user.getEmail());
             Assertions.assertEquals("ali",user.getFirstname());
-            Assertions.assertEquals("mohammadi",user.getLastname());
+            Assertions.assertEquals("mohammadi", user.getLastname());
+            Assertions.assertEquals(Role.EXPERT, user.getRole());
         }
     }
 
-    private void saveAllUser(){
+    private void saveAllUser() {
+        Service service = Service.builder()
+                .title("manzel")
+                .build();
+        serviceService.save(service);
+        UnderService underService = UnderService.builder()
+                .details("test")
+                .service(service)
+                .basePrice(123)
+                .build();
+        underServiceService.save(underService);
         User user = User.builder()
                 .firstname("ali")
                 .lastname("mohammadi")
                 .email("m@gmail.com")
                 .password("asdd")
-                .role(Role.CUSTOMER)
+                .role(Role.EXPERT)
                 .status(UserStatus.NEW)
                 .build();
+        user.getServices().add(underService);
         User user1 = User.builder()
                 .firstname("ali")
                 .lastname("mohammadi")
@@ -175,5 +189,6 @@ class UserServiceImplTest {
                 .build();
         userService.save(user1);
         userService.save(user);
+
     }
 }
