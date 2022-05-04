@@ -7,7 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = Schema.USER_TABLE_NAME,schema = Schema.SCHEMA_NAME)
@@ -24,7 +25,7 @@ public class User extends BaseEntity {
     private UserStatus status;
     private Role role;
     private Integer score;
-    private Collection<Service> services=new ArrayList<>();
+    private Set<UnderService> services=new HashSet<>();
 
     public User(String firstname, String lastname, String email, String password, byte[] image, int credit, UserStatus status,Integer score, Role role) {
         this.firstname = firstname;
@@ -77,17 +78,17 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "user_service",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id")
+            name = "user_under_service",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns ={@JoinColumn(name = "under_server_id")}
     )
-    public Collection<Service> getServices() {
+    public Set<UnderService> getServices() {
         return services;
     }
 
-    public void setServices(Collection<Service> services) {
+    public void setServices(Set<UnderService> services) {
         this.services = services;
     }
 

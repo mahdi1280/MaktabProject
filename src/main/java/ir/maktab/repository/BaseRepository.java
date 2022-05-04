@@ -1,7 +1,9 @@
 package ir.maktab.repository;
 
+import ir.maktab.model.User;
 import ir.maktab.session.MySession;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -9,23 +11,29 @@ public interface BaseRepository<T> {
 
     default void save(T t){
         Session instance = MySession.getInstance();
-        instance.beginTransaction();
+        Transaction transaction = instance.getTransaction();
+        transaction.begin();
         instance.save(t);
-        instance.getTransaction().commit();
+        transaction.commit();
+        instance.close();
     }
 
     default void delete(T t){
         Session instance = MySession.getInstance();
-        instance.beginTransaction();
+        Transaction transaction = instance.getTransaction();
+        transaction.begin();
         instance.delete(t);
-        instance.getTransaction().commit();
+        transaction.commit();
+        instance.close();
     }
 
     default void update(T t){
         Session instance = MySession.getInstance();
-        instance.beginTransaction();
-        instance.update(t);
-        instance.getTransaction().commit();
+        Transaction transaction = instance.getTransaction();
+        transaction.begin();
+        instance.saveOrUpdate(t);
+        transaction.commit();
+        instance.close();
     }
 
     default T findById(Class<T> clazz,long id){
@@ -37,4 +45,6 @@ public interface BaseRepository<T> {
         Session instance = MySession.getInstance();
         return instance.createQuery("from "+clazz.getName(),clazz).list();
     }
+
+
 }

@@ -4,6 +4,7 @@ import ir.maktab.model.User;
 import ir.maktab.model.enums.Role;
 import ir.maktab.session.MySession;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -20,5 +21,14 @@ public interface UserRepository extends BaseRepository<User> {
         Session instance = MySession.getInstance();
         return instance.createQuery("select u from User u where u.role=:role",User.class)
                 .setParameter("role", Role.CUSTOMER).getResultList();
+    }
+
+    default void changePassword(long id,String password){
+        Session instance = MySession.getInstance();
+        User user1 = instance.get(User.class, id);
+        user1.setPassword(password);
+        instance.beginTransaction();
+        instance.save(user1);
+        instance.getTransaction().commit();
     }
 }

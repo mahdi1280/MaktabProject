@@ -1,11 +1,15 @@
 package ir.maktab.service.user;
 
 import ir.maktab.model.Service;
+import ir.maktab.model.UnderService;
 import ir.maktab.model.User;
 import ir.maktab.model.enums.Role;
 import ir.maktab.model.enums.UserStatus;
+import ir.maktab.repository.UserRepository;
 import ir.maktab.service.service.ServiceService;
 import ir.maktab.service.service.ServiceServiceImpl;
+import ir.maktab.service.underservice.UnderServiceService;
+import ir.maktab.service.underservice.UnderServiceServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +21,7 @@ class UserServiceImplTest {
 
     UserService userService = new UserServiceImpl();
     ServiceService serviceService=new ServiceServiceImpl();
+    UnderServiceService underServiceService = new UnderServiceServiceImpl();
 
 
     @Test
@@ -61,9 +66,8 @@ class UserServiceImplTest {
                 .status(UserStatus.NEW)
                 .build();
         userService.save(user);
-        user.setPassword("ali");
-        userService.update(user);
-        Assertions.assertEquals(user.getPassword(), userService.findById(user.getId()).getPassword());
+        userService.changePassword(user.getId(),"test");
+        Assertions.assertEquals("test", userService.findById(user.getId()).getPassword());
     }
 
     @Test
@@ -80,16 +84,22 @@ class UserServiceImplTest {
         List<User> allUser = userService.findAllUser();
         for (User user:
                 allUser) {
-            Assertions.assertNotEquals(Role.CUSTOMER, user.getRole());
+            Assertions.assertEquals(Role.CUSTOMER, user.getRole());
         }
     }
 
     @Test
     void addServiceInExpert(){
-        Service service=Service.builder()
+        Service service = Service.builder()
                 .title("manzel")
                 .build();
         serviceService.save(service);
+        UnderService underService = UnderService.builder()
+                .details("asdasd")
+                .service(service)
+                .basePrice(123)
+                .build();
+        underServiceService.save(underService);
 
         User user = User.builder()
                 .firstname("ali")
@@ -101,7 +111,7 @@ class UserServiceImplTest {
                 .score(4)
                 .build();
 
-        user.getServices().add(service);
+        user.getServices().add(underService);
         userService.save(user);
 
         Assertions.assertEquals(user.getServices().size(), userService.findById(user.getId()).getServices().size());

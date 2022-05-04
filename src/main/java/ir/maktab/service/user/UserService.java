@@ -17,4 +17,6 @@ public interface UserService {
     List<User> findAllUser();
 
     List<User> findAll();
+
+    void changePassword(long id,String password);
 }

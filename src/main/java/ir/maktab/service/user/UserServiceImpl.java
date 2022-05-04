@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         return userRepository.findAll(User.class);
     }
+
+    @Override
+    public void changePassword(long id, String password) {
+        userRepository.changePassword(id,password);
+    }
 }

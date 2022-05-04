@@ -1,8 +1,11 @@
 package ir.maktab.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Table(schema = Schema.SCHEMA_NAME)
@@ -11,6 +14,7 @@ public class UnderService extends BaseEntity {
     private int basePrice;
     private String details;
     private Service service;
+    private Collection<User> users=new HashSet<>();
 
     public UnderService(int basePrice, String details, Service service) {
         this.basePrice = basePrice;
@@ -48,6 +52,15 @@ public class UnderService extends BaseEntity {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    @ManyToMany(mappedBy = "services")
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 
     public static class Builder{
