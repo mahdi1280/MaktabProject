@@ -6,6 +6,11 @@ import ir.maktab.model.enums.UserStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 class UserServiceImplTest {
@@ -26,8 +31,25 @@ class UserServiceImplTest {
         Assertions.assertEquals(user.getId(), userService.findById(user.getId()).getId());
     }
 
+
+
     @Test
-    void updateUser(){
+    void saveExpert(){
+        User user = User.builder()
+                .firstname("ali")
+                .lastname("mohammadi")
+                .email("mahdi@gmail.com")
+                .password("asdd")
+                .role(Role.CUSTOMER)
+                .status(UserStatus.NEW)
+                .image(getImage())
+                .build();
+        userService.save(user);
+        Assertions.assertEquals(user.getId(), userService.findById(user.getId()).getId());
+    }
+
+    @Test
+    void changePassword(){
         User user = User.builder()
                 .firstname("ali")
                 .lastname("mohammadi")
@@ -81,5 +103,19 @@ class UserServiceImplTest {
     void findAll(){
         List<User> all = userService.findAll();
         Assertions.assertEquals(all.size(),userService.findAll().size());
+    }
+
+    public byte[] getImage() {
+        File file = new File("./../resources/download.jpg");
+        byte[] bFile = new byte[(int) file.length()];
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bFile;
     }
 }
