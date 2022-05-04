@@ -5,10 +5,14 @@ import ir.maktab.model.User;
 import ir.maktab.model.enums.Role;
 import ir.maktab.session.MySession;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public interface UserRepository extends BaseRepository<User> {
 
@@ -34,10 +38,29 @@ public interface UserRepository extends BaseRepository<User> {
         instance.getTransaction().commit();
     }
 
-    default List<User> search(UserSearchRequest userSearchRequest){
+    default List<User> search(UserSearchRequest userSearchRequest) {
         Session instance = MySession.getInstance();
-        return instance.createCriteria(User.class)
-                .add(Restrictions.eq("email","m@gmail.com"))
-                .list();
+        CriteriaBuilder criteriaBuilder = instance.getCriteriaBuilder();
+        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+        List<Predicate> predicates=new ArrayList<>();
+        if (Objects.nonNull(userSearchRequest.getEmail())) {
+            predicates.add(criteriaBuilder.like(from.get("email"), "%" + userSearchRequest.getEmail() + "%"));
+        }
+        if (Objects.nonNull(userSearchRequest.getFirstname())) {
+            predicates.add(criteriaBuilder.like(from.get("firstname"), "%" + userSearchRequest.getFirstname() + "%"));
+        }
+        if (Objects.nonNull(userSearchRequest.getLastname())) {
+            predicates.add(criteriaBuilder.like(from.get("lastname"), "%" + userSearchRequest.getLastname() + "%"));
+        }
+        if (Objects.nonNull(userSearchRequest.getRole())) {
+            predicates.add(criteriaBuilder.equal(from.get("role"), userSearchRequest.getRole()));
+        }
+        if (Objects.nonNull(userSearchRequest.getUnderService())) {
+            predicates.add(criteriaBuilder.equal(from.get("underService"), userSearchRequest.getUnderService()));
+        }
+        CriteriaQuery<User> where = query.select(from).where(predicates.toArray(new Predicate[predicates.size()]));
+
+        return instance.createQuery(where).getResultList();
     }
 }

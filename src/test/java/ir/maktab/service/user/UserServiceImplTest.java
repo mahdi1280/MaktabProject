@@ -6,7 +6,6 @@ import ir.maktab.model.UnderService;
 import ir.maktab.model.User;
 import ir.maktab.model.enums.Role;
 import ir.maktab.model.enums.UserStatus;
-import ir.maktab.repository.UserRepository;
 import ir.maktab.service.service.ServiceService;
 import ir.maktab.service.service.ServiceServiceImpl;
 import ir.maktab.service.underservice.UnderServiceService;
@@ -141,16 +140,19 @@ class UserServiceImplTest {
 
     @Test
     void search(){
+        saveAllUser();
         UserSearchRequest userSearchRequest=UserSearchRequest.builder()
 //                        .underService()
                                 .email("m@gmail.com")
-//                                        .firstname()
-//                                                .lastname()
+                                        .firstname("ali")
+                                                .lastname("mohammadi")
                                                         .build();
 
         List<User> search = userService.search(userSearchRequest);
         for(User user:search){
             Assertions.assertEquals("m@gmail.com",user.getEmail());
+            Assertions.assertEquals("ali",user.getFirstname());
+            Assertions.assertEquals("mohammadi",user.getLastname());
         }
     }
 
